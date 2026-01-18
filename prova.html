@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#f0f2f5">
+
+    <title>Biglietto GTT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            color: #000;
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        
+        body::-webkit-scrollbar { 
+            display: none; 
+        }
+
+        .fixed-header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f2f5;
+            z-index: 1000;
+        }
+
+        header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 60px;
+        }
+
+        .close-btn {
+            position: absolute;
+            left: 20px;
+            background-color: #dbe4f0;
+            color: #1e428a;
+            width: 40px;
+            height: 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 300;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #1e428a;
+            font-size: 17px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            padding: 0 15px 15px 15px;
+            margin: 0;
+            color: #000;
+            background-color: #f0f2f5;
+        }
+
+        .scroll-container {
+            padding-top: 115px; 
+            padding-bottom: 160px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            min-height: 60px;
+        }
+
+        .label {
+            color: #264b88;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            flex: 1;
+        }
+
+        .value {
+            color: #000;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: right;
+            flex: 1.5;
+            line-height: 1.3;
+        }
+
+        .bottom-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .btn-convalida {
+            background-color: #ffde00;
+            color: #000;
+        }
+
+        .btn-autoconvalida {
+            background-color: #e0e0e0;
+            color: #1e428a;
+        }
+
+        .btn:active {
+            transform: scale(0.99);
+        }
+
+        /* Pulsante nascosto per fullscreen */
+        #fs-btn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-header-wrapper">
+        <header>
+            <div class="close-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+            <div class="header-title">BIGLIETTO SCELTO</div>
+        </header>
+        <h1>DAILY</h1>
+    </div>
+
+    <div class="scroll-container">
+        
+        <div class="card">
+            <span class="label">Descrizione<br>Tariffaria</span>
+            <span class="value">Daily APP</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Tipo</span>
+            <span class="value multiline">Valido fino al termine del servizio del giorno della prima validazione, rete URBANA + SUBURBANA GTT</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Durata</span>
+            <span class="value">Viaggi in METRO illimitati</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Inizio Validazione</span>
+            <span class="value" id="inizio-val"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Ultima Validazione</span>
+            <span class="value" id="ultima-val"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Fine Validazione</span>
+            <span class="value" id="fine-val"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Viaggi Residui</span>
+            <span class="value">0</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Data Acquisto</span>
+            <span class="value" id="data-acq"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Scadenza</span>
+            <span class="value" id="scadenza"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Linea</span>
+            <span class="value" id="linea-val"></span>
+        </div>
+
+        <div class="card">
+            <span class="label">Prezzo</span>
+            <span class="value">3,70€</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Seriale Biglietto</span>
+            <span class="value">38019720414324040</span>
+        </div>
+
+        <div class="card">
+            <span class="label">Seriale Contratto</span>
+            <span class="value">AE110A95-003ED106</span>
+        </div>
+
+    </div>
+
+    <div class="bottom-actions">
+        <button class="btn btn-convalida" id="btn-convalida">CONVALIDA</button>
+        <button class="btn btn-autoconvalida" id="btn-autoconvalida">AUTOCONVALIDA</button>
+    </div>
+
+    <!-- Pulsante nascosto per attivare il full screen -->
+    <button id="fs-btn" onclick="openFullscreen()">FULLSCREEN</button>
+
+    <script>
+        function openFullscreen() {
+            const elem = document.documentElement;
+
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        const numeroLinea = prompt("Inserisci il numero della linea:");
+        document.getElementById('linea-val').textContent = "Linea " + (numeroLinea ? numeroLinea : "XX");
+
+        function formatDateTime(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}-${month}-${year} ${hours}:${minutes}`;
+        }
+
+        const now = new Date();
+
+        const inizioValDate = new Date(now);
+        inizioValDate.setHours(now.getHours() - 1);
+        inizioValDate.setMinutes(now.getMinutes() - 2);
+
+        const ultimaValDate = new Date(now);
+        ultimaValDate.setMinutes(now.getMinutes() - 5);
+
+        const fineValDate = new Date(now);
+        fineValDate.setDate(now.getDate() + 1);
+        fineValDate.setHours(3, 0, 0, 0);
+
+        const dataAcqDate = new Date(inizioValDate);
+        dataAcqDate.setMinutes(inizioValDate.getMinutes() - 5);
+
+        const scadenzaDate = new Date(dataAcqDate);
+        scadenzaDate.setFullYear(dataAcqDate.getFullYear() + 1);
+
+        document.getElementById('inizio-val').textContent = formatDateTime(inizioValDate);
+        document.getElementById('ultima-val').textContent = formatDateTime(ultimaValDate);
+        document.getElementById('fine-val').textContent = formatDateTime(fineValDate);
+        document.getElementById('data-acq').textContent = formatDateTime(dataAcqDate);
+        document.getElementById('scadenza').textContent = formatDateTime(scadenzaDate);
+
+        // Attiva il fullscreen quando premi CONVALIDA
+        document.getElementById("btn-convalida").addEventListener("click", function() {
+            openFullscreen();
+            alert("Biglietto convalidato");
+        });
+
+        document.getElementById("btn-autoconvalida").addEventListener("click", function() {
+            alert("Autoconvalida attivata");
+        });
+    </script>
+
+</body>
+</html>
