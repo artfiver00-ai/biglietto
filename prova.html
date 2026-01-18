@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-	<meta name="application-name" content="Biglietto GTT">
-	<meta name="apple-mobile-web-app-title" content="Biglietto GTT">
-	
+    <meta name="application-name" content="Biglietto GTT">
+    <meta name="apple-mobile-web-app-title" content="Biglietto GTT">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#f0f2f5">
-	<link rel="manifest" href="manifest.json">
+
+    <link rel="manifest" href="manifest.json">
 
     <title>Biglietto GTT</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
@@ -31,7 +33,7 @@
             scrollbar-width: none; 
             -ms-overflow-style: none;
         }
-        
+
         body::-webkit-scrollbar { 
             display: none; 
         }
@@ -187,7 +189,7 @@
     </div>
 
     <div class="scroll-container">
-        
+
         <div class="card">
             <span class="label">Descrizione<br>Tariffaria</span>
             <span class="value">Daily APP</span>
@@ -195,7 +197,9 @@
 
         <div class="card">
             <span class="label">Tipo</span>
-            <span class="value multiline">Valido fino al termine del servizio del giorno della prima validazione, rete URBANA + SUBURBANA GTT</span>
+            <span class="value multiline">
+                Valido fino al termine del servizio del giorno della prima validazione, rete URBANA + SUBURBANA GTT
+            </span>
         </div>
 
         <div class="card">
@@ -271,10 +275,11 @@
                 elem.requestFullscreen();
             } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
             }
         }
+
+        // Entra in fullscreen al primo tap (necessario su Android)
+        document.addEventListener("click", openFullscreen, { once: true });
 
         const numeroLinea = prompt("Inserisci il numero della linea:");
         document.getElementById('linea-val').textContent = "Linea " + (numeroLinea ? numeroLinea : "XX");
@@ -313,7 +318,6 @@
         document.getElementById('data-acq').textContent = formatDateTime(dataAcqDate);
         document.getElementById('scadenza').textContent = formatDateTime(scadenzaDate);
 
-        // Attiva il fullscreen quando premi CONVALIDA
         document.getElementById("btn-convalida").addEventListener("click", function() {
             openFullscreen();
             alert("Biglietto convalidato");
@@ -322,20 +326,6 @@
         document.getElementById("btn-autoconvalida").addEventListener("click", function() {
             alert("Autoconvalida attivata");
         });
-		
-		<script>
-		function goFullscreen() {
-			const el = document.documentElement;
-			if (el.requestFullscreen) {
-				el.requestFullscreen();
-		} 	else if (el.webkitRequestFullscreen) {
-				el.webkitRequestFullscreen();
-		}
-}
-
-document.addEventListener("click", goFullscreen, { once: true });
-</script>
-
     </script>
 
 </body>
