@@ -2,7 +2,8 @@
   "name": "Biglietto GTT",
   "short_name": "Biglietto",
   "start_url": "./biglietto.html",
-  "display": "fullscreen",
+  "display": "standalone",
+  "scope": "./",
   "background_color": "#f0f2f5",
   "theme_color": "#f0f2f5",
   "orientation": "portrait"
