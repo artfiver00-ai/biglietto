@@ -1,9 +1,9 @@
 {
   "name": "Biglietto GTT",
   "short_name": "Biglietto",
-  "start_url": "./index.html",
+  "start_url": "/biglietto/index.html",
   "display": "standalone",
-  "scope": "./",
+  "scope": "/biglietto/",
   "background_color": "#f0f2f5",
   "theme_color": "#f0f2f5",
   "orientation": "portrait"
